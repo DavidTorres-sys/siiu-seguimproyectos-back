@@ -47,7 +47,7 @@ public class Messages {
      * </p>
      */
     @PostConstruct
-    private void init() {
+    void init() {
         accessor = new MessageSourceAccessor(messageSource, Locale.ENGLISH);
     }
 

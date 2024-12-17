@@ -2,64 +2,70 @@ package com.udea.siiuseguimproyectosback.core.common;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 import org.springframework.context.MessageSource;
 import org.springframework.context.NoSuchMessageException;
 
 import java.util.Locale;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class MessagesTest {
+
+    private Messages messages;
 
     @Mock
     private MessageSource messageSource;
 
-    @InjectMocks
-    private Messages messages;
-
     @BeforeEach
-    void setUp() {
+    public void setUp() {
+        // Initialize the mock objects
+        MockitoAnnotations.openMocks(this);
+
         // Initialize the Messages object with the mocked MessageSource
         messages = new Messages(messageSource);
+        messages.init(); // Ensure the init method is called after construction
     }
 
     @Test
-    void testGetMessage_Success() {
+    public void testGetMessage_Success() {
         // Arrange
-        String messageCode = "greeting";
+        String code = "greeting";
         String expectedMessage = "Hello, World!";
-        // Mock the behavior of MessageSource to return the expected message for the "greeting" code
-        when(messageSource.getMessage(messageCode, null, Locale.ENGLISH)).thenReturn(expectedMessage);
+        when(messageSource.getMessage(code, null, Locale.ENGLISH)).thenReturn(expectedMessage);
+
         // Act
-        String result = messages.get(messageCode);
+        String result = messages.get(code);
+
         // Assert
-        assertEquals(expectedMessage, result);  // Assert that the result matches the expected message
+        assertEquals(expectedMessage, result);
     }
 
     @Test
-    void testGetMessage_NotFound() {
+    public void testGetMessage_NotFound() {
         // Arrange
-        String messageCode = "nonexistent";
-        // Mock the behavior of MessageSource to throw NoSuchMessageException for the "nonexistent" code
-        when(messageSource.getMessage(messageCode, null, Locale.ENGLISH)).thenThrow(NoSuchMessageException.class);
+        String code = "unknown_code";
+        when(messageSource.getMessage(code, null, Locale.ENGLISH)).thenThrow(NoSuchMessageException.class);
+
         // Act
-        String result = messages.get(messageCode);
+        String result = messages.get(code);
+
         // Assert
-        assertEquals("No message available to show.", result);  // Assert that the fallback message is returned
+        assertEquals("No message available to show.", result);
     }
 
     @Test
-    void testGetMessage_Fallback() {
+    public void testGetMessage_Fallback() {
         // Arrange
-        String messageCode = "fallback";
-        // Mock the behavior of MessageSource to return null (or a behavior that results in the fallback message)
-        when(messageSource.getMessage(messageCode, null, Locale.ENGLISH)).thenReturn(null);
+        String code = "fallback_code";
+        when(messageSource.getMessage(code, null, Locale.ENGLISH)).thenThrow(NoSuchMessageException.class);
+
         // Act
-        String result = messages.get(messageCode);
+        String result = messages.get(code);
+
         // Assert
-        assertEquals("No message available to show.", result);  // Assert that the fallback message is returned
+        assertEquals("No message available to show.", result);
     }
 }
