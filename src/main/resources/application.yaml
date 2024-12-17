@@ -4,9 +4,9 @@ spring:
   application:
     name: Siiu Seguimientos proyectos
   datasource:
-    url:  jdbc:oracle:thin:@//ndbsdev.udea.local:1521/UDEA_DEV.udea.cloud
-    username: bupp
-    password: Jf1_UO_lRbw5
+    url: ${SPRING_DATASOURCE_URL}
+    username: ${SPRING_DATASOURCE_USERNAME}
+    password: ${SPRING_DATASOURCE_PASSWORD}
     driver-class-name: oracle.jdbc.OracleDriver
   jpa:
     show-sql: true
