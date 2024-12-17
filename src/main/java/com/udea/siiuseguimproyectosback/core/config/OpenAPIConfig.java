@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import java.util.Collections;
+import java.util.List;
 
 /**
  * Configuration class for OpenAPI documentation of the SIIU Seguimiento Proyectos API.
@@ -25,6 +26,7 @@ public class OpenAPIConfig {
     // Injects the server URL for the development environment from application.yaml
     @Value("${siiu-seguimproyectos-api.openapi.dev-url}")
     private String devUrl;
+
 
     /**
      * Bean method to configure and expose OpenAPI metadata for the API.
@@ -46,10 +48,6 @@ public class OpenAPIConfig {
         devServer.setUrl(devUrl);
         devServer.setDescription("Server URL in Development environment");
 
-        String title = "SIIU Seguimiento Proyectos API";
-        String description = "This API exposes the endpoints for SIIU Seguimiento Proyectos.";
-        String version = "1.0";
-
         Contact contact = new Contact();
         contact.setEmail("desarrollo.siiu1@udea.edu.co");
         contact.setName("SIIU Seguimiento Proyectos API Support");
@@ -59,12 +57,13 @@ public class OpenAPIConfig {
                 .url("https://www.siuu-seguiproyectos.com/licenses/mit/");
 
         Info info = new Info()
-                .title(title)
-                .version(version)
+                .title("SIIU Seguimiento Proyectos API")
+                .version("1.0.0")
                 .contact(contact)
-                .description(description)
+                .description("This API exposes the endpoints for SIIU Seguimiento Proyectos.")
                 .termsOfService("https://www.siuu-seguiproyectos.com/terms")
                 .license(mitLicense);
+
 
         return new OpenAPI().info(info).servers(Collections.singletonList(devServer));
     }
