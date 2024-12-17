@@ -4,8 +4,10 @@ services:
     build:
       context: ..
       dockerfile: docker/Dockerfile
-    env_file:
-      - ../.env
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:oracle:thin:@//ndbsdev.udea.local:1521/UDEA_DEV.udea.cloud
+      SPRING_DATASOURCE_USERNAME: bupp
+      SPRING_DATASOURCE_PASSWORD: Jf1_UO_lRbw5
     ports:
       - "8080:8080"
     volumes:

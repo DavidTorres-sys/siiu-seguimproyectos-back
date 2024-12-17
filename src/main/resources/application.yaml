@@ -4,7 +4,7 @@ spring:
   application:
     name: Siiu Seguimientos proyectos
   datasource:
-    url:  jdbc:oracle:thin:@ndbsdev.udea.local:1521/UDEA_DEV.udea.cloud
+    url:  jdbc:oracle:thin:@//ndbsdev.udea.local:1521/UDEA_DEV.udea.cloud
     username: bupp
     password: Jf1_UO_lRbw5
     driver-class-name: oracle.jdbc.OracleDriver
@@ -19,7 +19,7 @@ spring:
 
 siiu-seguimproyectos-api:
   openapi:
-    dev-url: http://localhost:8080/
+    dev-url: http://localhost:8080
 
 server:
   port: 8080
@@ -30,5 +30,5 @@ logging:
     org.springframework: DEBUG
 
 springdoc:
-  packages-to-scan: "package1, package2, com.sitas.checkin"
+  packages-to-scan: "package1, package2, com.udea.siiuseguimproyectosback"
   paths-to-match: "/v1, /api/balance/**, *, **, /*, /**"
