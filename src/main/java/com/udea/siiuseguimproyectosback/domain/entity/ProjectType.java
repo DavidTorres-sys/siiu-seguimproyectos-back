@@ -48,7 +48,7 @@ public class ProjectType {
      * in the {@code NOMBRE} column of the database table.
      * </p>
      */
-    @Column(name = "NOMBRE", nullable = false, length = 100)
+    @Column(name = "NOMBRE", nullable = false, length = 200)
     private String name;
 
 }
