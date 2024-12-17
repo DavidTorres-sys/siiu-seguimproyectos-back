@@ -10,15 +10,3 @@ services:
       - "8080:8080"
     volumes:
       - ./logs:/app/logs
-    depends_on:
-        - oracle
-
-  oracle:
-    image: gvenzl/oracle-free:latest
-    ports:
-      - "1521:1521"
-    environment:
-      - ORACLE_ALLOW_REMOTE=true
-      - ORACLE_PASSWORD=password
-    volumes:
-      - ./data:/opt/oracle/oradata
