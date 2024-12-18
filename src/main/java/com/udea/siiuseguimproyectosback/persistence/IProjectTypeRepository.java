@@ -1,6 +1,6 @@
 package com.udea.siiuseguimproyectosback.persistence;
 
-import com.udea.siiuseguimproyectosback.domain.entity.ProjectType;
+import com.udea.siiuseguimproyectosback.domain.entity.project.ProjectType;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**

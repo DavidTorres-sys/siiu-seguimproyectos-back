@@ -1,6 +1,6 @@
 package com.udea.siiuseguimproyectosback.services.projectType;
 
-import com.udea.siiuseguimproyectosback.domain.dto.ProjectTypeDTO;
+import com.udea.siiuseguimproyectosback.domain.dto.project.ProjectTypeDTO;
 
 import java.util.List;
 import java.util.Optional;

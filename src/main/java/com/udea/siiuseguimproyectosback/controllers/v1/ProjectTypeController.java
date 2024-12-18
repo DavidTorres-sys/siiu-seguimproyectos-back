@@ -1,6 +1,6 @@
 package com.udea.siiuseguimproyectosback.controllers.v1;
 
-import com.udea.siiuseguimproyectosback.domain.dto.ProjectTypeDTO;
+import com.udea.siiuseguimproyectosback.domain.dto.project.ProjectTypeDTO;
 import com.udea.siiuseguimproyectosback.services.projectType.IProjectTypeService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;

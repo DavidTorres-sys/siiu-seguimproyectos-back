@@ -1,4 +1,4 @@
-package com.udea.siiuseguimproyectosback.domain.entity;
+package com.udea.siiuseguimproyectosback.domain.entity.project;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
