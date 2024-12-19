@@ -1,10 +1,10 @@
-package com.udea.siiuseguimproyectosback.services.projectType;
+package com.udea.siiuseguimproyectosback.services.project.projectType;
 
 import com.udea.siiuseguimproyectosback.core.exception.DataNotFoundException;
 import com.udea.siiuseguimproyectosback.domain.dto.project.ProjectTypeDTO;
 import com.udea.siiuseguimproyectosback.domain.entity.project.ProjectType;
 import com.udea.siiuseguimproyectosback.domain.mapper.project.IProjectTypeMapper;
-import com.udea.siiuseguimproyectosback.persistence.IProjectTypeRepository;
+import com.udea.siiuseguimproyectosback.persistence.project.IProjectTypeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -86,10 +86,11 @@ public class ProjectTypeServiceImpl implements IProjectTypeService {
         if (skip < 0 || limit <= 0) {
             throw new IllegalArgumentException("Los valores de 'skip' y 'limit' deben ser mayores a cero.");
         }
-        PageRequest pageRequest = PageRequest.of(skip, limit);
-
         try {
-            List<ProjectType> projectTypes = projectTypeRepository.findAll(pageRequest).getContent();
+            List<ProjectType> projectTypes = projectTypeRepository
+                    .findAll(PageRequest.of(skip, limit))
+                    .getContent();
+
             if (projectTypes.isEmpty()) {
                 throw new DataNotFoundException("No se encontraron tipos de proyecto.");
             }

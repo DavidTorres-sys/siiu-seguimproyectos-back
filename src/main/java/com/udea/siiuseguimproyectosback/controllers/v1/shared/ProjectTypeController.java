@@ -1,9 +1,12 @@
-package com.udea.siiuseguimproyectosback.controllers.v1;
+package com.udea.siiuseguimproyectosback.controllers.v1.shared;
 
+import com.udea.siiuseguimproyectosback.core.common.StandardResponse;
 import com.udea.siiuseguimproyectosback.domain.dto.project.ProjectTypeDTO;
-import com.udea.siiuseguimproyectosback.services.projectType.IProjectTypeService;
+import com.udea.siiuseguimproyectosback.services.project.projectType.IProjectTypeService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -28,7 +31,7 @@ import java.util.Optional;
  * @see ProjectTypeDTO
  */
 @RestController
-@RequestMapping("/v1/project-type")
+@RequestMapping("/v1/compartido")
 @Tag(name = "Project Type Management", description = "Operations for managing Project Types")
 public class ProjectTypeController {
 
@@ -56,25 +59,33 @@ public class ProjectTypeController {
      * @param limit the maximum number of records to return (default = 10)
      * @return a {@link ResponseEntity} containing a list of {@link ProjectTypeDTO}
      */
-    @GetMapping("/")
-    @Operation(summary = "Get paginated project types",
-            description = "Fetches project types using pagination with optional parameters for skip and limit.")
+    @Operation(
+            summary = "Get paginated project types",
+            description = "Fetches project types using pagination with optional parameters for skip and limit.",
+            tags = {"Project Type Management"}
+    )
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Successful retrieval of project types"),
-            @ApiResponse(responseCode = "404", description = "No project types found"),
-            @ApiResponse(responseCode = "400", description = "Invalid parameters provided"),
-            @ApiResponse(responseCode = "500", description = "Internal server error")
+            @ApiResponse(responseCode = "200", description = "List of project types retrieved successfully",
+                    content = @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = ProjectTypeDTO.class))),
+            @ApiResponse(responseCode = "400", description = "Invalid pagination parameters",
+                    content = @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = StandardResponse.class))),
+            @ApiResponse(responseCode = "404", description = "No project types found",
+                    content = @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = StandardResponse.class))),
+            @ApiResponse(responseCode = "500", description = "Internal server error",
+                    content = @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = RuntimeException.class)))
     })
-    public ResponseEntity<List<ProjectTypeDTO>> getAllProjectTypes(
-            @Parameter(description = "Number of records to skip (pagination offset)", example = "0", required = false)
+    @GetMapping("/tipos-proyecto")
+    public ResponseEntity<List<ProjectTypeDTO>> getAll(
+            @Parameter(description = "Number of records to skip (pagination offset)", example = "0")
             @RequestParam(defaultValue = "0") Integer skip,
 
-            @Parameter(description = "Maximum number of records to return (pagination limit)", example = "10", required = false)
+            @Parameter(description = "Maximum number of records to return (pagination limit)", example = "10")
             @RequestParam(defaultValue = "10") Integer limit) {
-
-        Optional<List<ProjectTypeDTO>> projectTypes = projectTypeService.getAll(skip, limit);
-
-        return projectTypes.map(ResponseEntity::ok)
+        return projectTypeService.getAll(skip, limit).map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 }
