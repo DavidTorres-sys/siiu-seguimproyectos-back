@@ -14,7 +14,8 @@ import org.mapstruct.Mapper;
  * </p>
  * <p>
  * The implementation of this interface will be generated automatically by the MapStruct library at compile time.
- * The generated implementation will be registered as a Spring Bean due to the use of the {@code @Mapper(componentModel = "spring")} annotation.
+ * The generated implementation will be registered as a Spring Bean due to the use of the
+ * {@code @Mapper(componentModel = "spring")} annotation.
  * </p>
  *
  * @see AdministrativeCenterDTO
