@@ -9,6 +9,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 /**
  * Represents a project type entity in the system.
@@ -48,6 +50,8 @@ public class ProjectType {
      * in the {@code NOMBRE} column of the database table.
      * </p>
      */
+    @NotNull
+    @Size(max = 200)
     @Column(name = "NOMBRE", nullable = false, length = 200)
     private String name;
 

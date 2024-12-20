@@ -4,6 +4,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.Date;
 
 /**
@@ -41,19 +43,22 @@ public class SelectionProcess {
     /**
      * The type of project associated with this selection process.
      */
-    @Column(name = "TIPO_PROYECTO", nullable = false, length = 3)
+    @NotNull
+    @Column(name = "TIPO_PROYECTO", nullable = false)
     private Integer projectType;
 
     /**
      * Identifier for the evaluator list manager.
      */
-    @Column(name = "RESPONSABLE_LISTA_EVALUADORES", nullable = false, length = 2)
+    @NotNull
+    @Column(name = "RESPONSABLE_LISTA_EVALUADORES", nullable = false)
     private Integer responsibleEvaluatorList;
 
     /**
      * Indicator whether there are description limits.
      */
-    @Column(name = "LIMITA_DESCRIPCIONES", nullable = false, length = 2)
+    @NotNull
+    @Column(name = "LIMITA_DESCRIPCIONES", nullable = false)
     private Integer limitDescriptions;
 
     /**
@@ -71,62 +76,75 @@ public class SelectionProcess {
     /**
      * Name of the selection process.
      */
+    @NotNull
+    @Size(max = 200)
     @Column(name = "NOMBRE", nullable = false, length = 200)
     private String name;
 
     /**
      * Description of the selection process.
      */
+    @Size(max = 400)
     @Column(name = "DESCRIPCION", length = 400)
     private String description;
 
     // Required fields for the process
-    @Column(name = "REQUERIDO_DESCRIPCION", nullable = false, length = 38)
+    @NotNull
+    @Column(name = "REQUERIDO_DESCRIPCION", nullable = false)
     private Long requiredDescription;
 
-    @Column(name = "REQUERIDO_PARTICIPANTE", nullable = false, length = 38)
+    @NotNull
+    @Column(name = "REQUERIDO_PARTICIPANTE", nullable = false)
     private Long requiredParticipant;
 
-    @Column(name = "REQUERIDO_CRONOGRAMA", nullable = false, length = 38)
+    @NotNull
+    @Column(name = "REQUERIDO_CRONOGRAMA", nullable = false)
     private Long requiredSchedule;
 
-    @Column(name = "REQUERIDO_PRESUPUESTO", nullable = false, length = 38)
+    @NotNull
+    @Column(name = "REQUERIDO_PRESUPUESTO", nullable = false)
     private Long requiredBudget;
 
-    @Column(name = "REQUERIDO_EVALUADOR", nullable = false, length = 38)
+    @NotNull
+    @Column(name = "REQUERIDO_EVALUADOR", nullable = false)
     private Long requiredEvaluator;
 
-    @Column(name = "REQUERIDO_COMPROMISO", nullable = false, length = 38)
+    @NotNull
+    @Column(name = "REQUERIDO_COMPROMISO", nullable = false)
     private Long requiredCommitment;
 
-    @Column(name = "REQUERIDO_PLAN_TRABAJO", nullable = false, length = 38)
+    @NotNull
+    @Column(name = "REQUERIDO_PLAN_TRABAJO", nullable = false)
     private Long requiredWorkPlan;
 
-    @Column(name = "REQUERIDO_ENCUESTA", length = 38)
+    @NotNull
+    @Column(name = "REQUERIDO_ENCUESTA")
     private Long requiredSurvey;
 
     // Additional metadata
-    @Column(name = "NIVEL_PROYECTO", length = 5)
+    @Column(name = "NIVEL_PROYECTO")
     private Integer projectLevel;
 
-    @Column(name = "SUBTIPO_PROYCETO", length = 3)
+    @Column(name = "SUBTIPO_PROYCETO")
     private Integer projectSubtype;
 
-    @Column(name = "SUBNIVEL_PROYECTO", length = 3)
+    @Column(name = "SUBNIVEL_PROYECTO")
     private Integer projectSublevel;
 
-    @Column(name = "CLASIFICACION", length = 20)
+    @Column(name = "CLASIFICACION")
     private String classification;
 
-    @Column(name = "CLASE_SUBPROYECTO", length = 20)
+    @Column(name = "CLASE_SUBPROYECTO")
     private Integer subprojectClass;
 
     /**
      * Current state of the selection process.
      */
+    @NotNull
+    @Size(max = 31)
     @Column(name = "ESTADO", nullable = false, length = 31)
     private String state;
 
-    @Column(name = "REQUERIDO_INFO_COMPLEMENTARIA", length = 38)
+    @Column(name = "REQUERIDO_INFO_COMPLEMENTARIA")
     private Long requiredAdditionalInfo;
 }
