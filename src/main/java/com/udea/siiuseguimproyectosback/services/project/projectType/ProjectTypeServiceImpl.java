@@ -5,6 +5,7 @@ import com.udea.siiuseguimproyectosback.domain.dto.project.ProjectTypeDTO;
 import com.udea.siiuseguimproyectosback.domain.entity.project.ProjectType;
 import com.udea.siiuseguimproyectosback.domain.mapper.project.IProjectTypeMapper;
 import com.udea.siiuseguimproyectosback.persistence.project.IProjectTypeRepository;
+import com.udea.siiuseguimproyectosback.utils.ValidateParams;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -83,9 +84,7 @@ public class ProjectTypeServiceImpl implements IProjectTypeService {
      */
     @Override
     public Optional<List<ProjectTypeDTO>> getAll(Integer skip, Integer limit) {
-        if (skip < 0 || limit <= 0) {
-            throw new IllegalArgumentException("Los valores de 'skip' y 'limit' deben ser mayores a cero.");
-        }
+        ValidateParams.validatePaginationParams(skip, limit);
         try {
             List<ProjectType> projectTypes = projectTypeRepository
                     .findAll(PageRequest.of(skip, limit))

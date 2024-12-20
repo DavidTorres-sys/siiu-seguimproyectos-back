@@ -5,6 +5,7 @@ import com.udea.siiuseguimproyectosback.domain.dto.announcement.AnnouncementDTO;
 import com.udea.siiuseguimproyectosback.domain.entity.announcement.Announcement;
 import com.udea.siiuseguimproyectosback.domain.mapper.announcement.IAnnouncementMapper;
 import com.udea.siiuseguimproyectosback.persistence.announcement.IAnnouncementRepository;
+import com.udea.siiuseguimproyectosback.utils.ValidateParams;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -27,9 +28,7 @@ public class AnnouncementServiceImpl implements IAnnouncementService {
 
     @Override
     public Optional<List<AnnouncementDTO>> getAll(Integer skip, Integer limit) {
-        if (skip < 0 || limit <= 0) {
-            throw new IllegalArgumentException("Los valores de 'skip' y 'limit' deben ser mayores a cero.");
-        }
+        ValidateParams.validatePaginationParams(skip, limit);
         try {
             List<Announcement> announcements = announcementRepository
                     .findAll(PageRequest.of(skip, limit))

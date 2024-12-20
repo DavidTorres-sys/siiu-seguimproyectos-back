@@ -5,6 +5,7 @@ import com.udea.siiuseguimproyectosback.domain.dto.administrative.Administrative
 import com.udea.siiuseguimproyectosback.domain.entity.administrative.AdministrativeCenter;
 import com.udea.siiuseguimproyectosback.domain.mapper.administrative.IAdministrativeCenterMapper;
 import com.udea.siiuseguimproyectosback.persistence.administrative.IAdministrativeCenterRepository;
+import com.udea.siiuseguimproyectosback.utils.ValidateParams;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -77,10 +78,7 @@ public class AdministrativeCenterServiceImpl implements IAdministrativeCenterSer
      */
     @Override
     public Optional<List<AdministrativeCenterDTO>> getAll(Integer skip, Integer limit) {
-
-        if (skip < 0 || limit <= 0) {
-            throw new IllegalArgumentException("Los valores de 'skip' y 'limit' deben ser mayores a cero.");
-        }
+        ValidateParams.validatePaginationParams(skip, limit);
         try {
             List<AdministrativeCenter> administrativeCenters = administrativeCenterRepository
                     .findAll(PageRequest.of(skip, limit))

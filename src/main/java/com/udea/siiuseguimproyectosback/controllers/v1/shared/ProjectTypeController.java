@@ -15,7 +15,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 /**
  * REST Controller for managing Project Types.
@@ -25,7 +24,7 @@ import java.util.Optional;
  * </p>
  *
  * <h3>Base URL:</h3>
- * {@code /v1/project-type}
+ * {@code /v1/compartido}
  *
  * @see IProjectTypeService
  * @see ProjectTypeDTO
@@ -39,8 +38,11 @@ public class ProjectTypeController {
 
     /**
      * Constructor for ProjectTypeController.
+     * <p>
+     * Injects the {@link IProjectTypeService} service for handling business logic related to Project Types.
+     * </p>
      *
-     * @param projectTypeService the service handling the business logic for Project Types
+     * @param projectTypeService the service handling Project Types.
      */
     @Autowired
     public ProjectTypeController(IProjectTypeService projectTypeService) {
@@ -55,9 +57,29 @@ public class ProjectTypeController {
      * If no values are provided, default values are used.
      * </p>
      *
-     * @param skip  the number of records to skip (default = 0)
-     * @param limit the maximum number of records to return (default = 10)
-     * @return a {@link ResponseEntity} containing a list of {@link ProjectTypeDTO}
+     * <h3>Endpoint:</h3>
+     * <ul>
+     * <li><b>URL:</b> {@code /tipos-proyecto}</li>
+     * <li><b>Method:</b> GET</li>
+     * <li><b>Parameters:</b>
+     * <ul>
+     *     <li>{@code skip} (optional, default=0): Number of records to skip (pagination offset).</li>
+     *     <li>{@code limit} (optional, default=10): Maximum number of records to return.</li>
+     * </ul>
+     * </li>
+     * <li><b>Responses:</b>
+     * <ul>
+     *     <li>{@code 200}: List of Project Types retrieved successfully.</li>
+     *     <li>{@code 400}: Invalid pagination parameters.</li>
+     *     <li>{@code 404}: No Project Types found.</li>
+     *     <li>{@code 500}: Internal server error.</li>
+     * </ul>
+     * </li>
+     * </ul>
+     *
+     * @param skip  the number of records to skip (default = 0).
+     * @param limit the maximum number of records to return (default = 10).
+     * @return a {@link ResponseEntity} containing a list of {@link ProjectTypeDTO} or an appropriate HTTP error response.
      */
     @Operation(
             summary = "Get paginated project types",
