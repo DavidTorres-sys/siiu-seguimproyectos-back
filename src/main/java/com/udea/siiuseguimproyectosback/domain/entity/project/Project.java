@@ -1,5 +1,6 @@
 package com.udea.siiuseguimproyectosback.domain.entity.project;
 
+import com.udea.siiuseguimproyectosback.domain.entity.administrative.AdministrativeCenter;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -26,7 +27,7 @@ public class Project {
 
     @NotNull
     @Column(name = "PROCESO_SELECCION", nullable = false)
-    private Integer selectionProcess;
+    private Long selectionProcess;
 
     @Column(name = "SUBTIPO_PROYECTO")
     private Integer projectSubtype;
@@ -37,9 +38,12 @@ public class Project {
     @Column(name = "INSTANCIA_ADMTIVA_ACTUAL")
     private Integer currentAdministrativeInstance;
 
-    @NotNull
-    @Column(name = "CENTRO_GESTION", nullable = false)
-    private Integer managementCenter;
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "IDENTIFICADOR", referencedColumnName = "IDENTIFICADOR")
+//    private AdministrativeCenter administrativeCenter;
+
+    @Column(name = "CENTRO_GESTION")
+    private Long administrativeCenter;
 
     @Column(name = "FECHA_ENVIO_CENTRO")
     private LocalDate sendCenterDate;
@@ -65,7 +69,7 @@ public class Project {
     @NotNull
     @Size(max = 31)
     @Column(name = "ESTADO", nullable = false, length = 31)
-    private String state;
+    private String status;
 
     @Column(name = "FECHA_APROBACION_RECHAZO")
     private LocalDate approvalRejectionDate;
@@ -86,7 +90,7 @@ public class Project {
 
     @NotNull
     @Size(max = 200)
-    @Column(name = "PALABRAS_CLAVE", nullable = false, length = 200)
+    @Column(name = "PALABRAS_CLAVES", nullable = false, length = 200)
     private String keywords;
 
     @NotNull

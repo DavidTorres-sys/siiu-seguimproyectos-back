@@ -84,7 +84,7 @@ public class AdministrativeCenterServiceImpl implements IAdministrativeCenterSer
                     .findAll(PageRequest.of(skip, limit))
                     .getContent();
 
-            if(administrativeCenters.isEmpty()) {
+            if (administrativeCenters.isEmpty()) {
                 throw new DataNotFoundException("No se encontraron centros administrativos en el rango especificado.");
             }
             return Optional.of(administrativeCenterMapper.toDTO(administrativeCenters));

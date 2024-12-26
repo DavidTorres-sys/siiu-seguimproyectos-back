@@ -9,6 +9,6 @@ import java.util.Optional;
 
 public interface IProjectService {
 
-    Optional<List<ProjectDTO>> filter(UserSession currentUser, ProjectFilterPayloadDTO payload);
+    Optional<List<ProjectDTO>> filter(ProjectFilterPayloadDTO filterDTO);
 
 }
