@@ -1,6 +1,7 @@
 package com.udea.siiuseguimproyectosback.domain.entity.project;
 
 import com.udea.siiuseguimproyectosback.domain.entity.administrative.AdministrativeCenter;
+import com.udea.siiuseguimproyectosback.domain.entity.announcement.Announcement;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -19,15 +20,23 @@ public class Project {
     @Column(name = "CODIGO", nullable = false, length = 20)
     private String code;
 
-    @Column(name = "CONVOCATORIA")
-    private Long announcement;
+//    @Column(name = "CONVOCATORIA")
+//    private Long announcement;
+
+    @ManyToOne
+    @JoinColumn(name = "CONVOCATORIA", referencedColumnName = "IDENTIFICADOR")
+    private Announcement announcement;
 
     @Column(name = "MODALIDAD_CONVOCATORIA")
     private Long announcementMode;
 
-    @NotNull
-    @Column(name = "PROCESO_SELECCION", nullable = false)
-    private Long selectionProcess;
+//    @NotNull
+////    @Column(name = "PROCESO_SELECCION", nullable = false)
+////    private Long selectionProcess;
+
+    @ManyToOne
+    @JoinColumn(name = "PROCESO_SELECCION", referencedColumnName = "IDENTIFICADOR")
+    private SelectionProcess selectionProcess;
 
     @Column(name = "SUBTIPO_PROYECTO")
     private Integer projectSubtype;
