@@ -38,10 +38,6 @@ public class Project {
     @Column(name = "INSTANCIA_ADMTIVA_ACTUAL")
     private Integer currentAdministrativeInstance;
 
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "IDENTIFICADOR", referencedColumnName = "IDENTIFICADOR")
-//    private AdministrativeCenter administrativeCenter;
-
     @Column(name = "CENTRO_GESTION")
     private Long administrativeCenter;
 

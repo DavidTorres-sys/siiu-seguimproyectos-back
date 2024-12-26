@@ -9,6 +9,7 @@ import com.udea.siiuseguimproyectosback.domain.mapper.project.IProjectMapper;
 import com.udea.siiuseguimproyectosback.persistence.announcement.IAnnouncementRepository;
 import com.udea.siiuseguimproyectosback.persistence.project.IProjectRepository;
 import com.udea.siiuseguimproyectosback.persistence.project.ISelectionProcessRepository;
+import com.udea.siiuseguimproyectosback.services.project.project.filter.IProjectFilterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
@@ -26,16 +27,19 @@ public class ProjectServiceImpl implements IProjectService{
     private final IAnnouncementRepository announcementRepository;
     private final IProjectMapper projectMapper;
     private final ISelectionProcessRepository selectionProcessRepository;
+    private final IProjectFilterService projectFilterService;
 
     @Autowired
     public ProjectServiceImpl(IProjectRepository projectRepository,
                               IAnnouncementRepository announcementRepository,
                               IProjectMapper projectMapper,
-                              ISelectionProcessRepository selectionProcessRepository) {
+                              ISelectionProcessRepository selectionProcessRepository,
+                              IProjectFilterService projectFilterService) {
         this.projectRepository = projectRepository;
         this.announcementRepository = announcementRepository;
         this.projectMapper = projectMapper;
         this.selectionProcessRepository = selectionProcessRepository;
+        this.projectFilterService = projectFilterService;
     }
 
     @Override
@@ -45,18 +49,12 @@ public class ProjectServiceImpl implements IProjectService{
                     .findByAdministrativeCenter(filterDTO.getAdministrativeCenterId())
                     .orElse(Collections.emptyList());
 
-            Predicate<Project> projectPredicate = createProjectPredicate(filterDTO);
+            Predicate<Project> projectPredicate = projectFilterService.createProjectPredicate(filterDTO);
 
-            List<ProjectDTO> projectDTOs = projects.stream()
+            List<ProjectDTO> projectDTOs = projects
+                    .stream()
                     .filter(projectPredicate)
-                    .map(project -> {
-                        ProjectDTO projectDTO = projectMapper.toDTO(project);
-                        Optional<Announcement> announcement = announcementRepository.findById(project.getAnnouncement());
-                        announcement.ifPresent(a -> projectDTO.setAnnouncement(a.getName()));
-                        Optional<SelectionProcess> selectionProcess = selectionProcessRepository.findById(project.getSelectionProcess());
-                        selectionProcess.ifPresent(s -> projectDTO.setSelectionProcess(s.getName()));
-                        return projectDTO;
-                    })
+                    .map(projectMapper::toDTO)
                     .collect(Collectors.toList());
 
             return projectDTOs.isEmpty() ? Optional.empty() : Optional.of(projectDTOs);
@@ -66,19 +64,5 @@ public class ProjectServiceImpl implements IProjectService{
         } catch (Exception e) {
             throw new RuntimeException("Error desconocido al intentar filtrar proyectos.", e);
         }
-    }
-
-    private Predicate<Project> createProjectPredicate(ProjectFilterPayloadDTO filterDTO) {
-        return project ->
-                isMatching(filterDTO.getProjectCode(), project.getCode()) &&
-                        isMatching(filterDTO.getStatus(), project.getStatus()) &&
-                        isMatching(filterDTO.getAnnouncementId(), project.getAnnouncement()) &&
-                        isMatching(filterDTO.getSelectionProcessId(), project.getSelectionProcess());
-    }
-
-    private boolean isMatching(Object filterValue, Object projectValue) {
-        return Optional.ofNullable(filterValue)
-                .map(value -> value.equals(projectValue))
-                .orElse(true);
     }
 }
