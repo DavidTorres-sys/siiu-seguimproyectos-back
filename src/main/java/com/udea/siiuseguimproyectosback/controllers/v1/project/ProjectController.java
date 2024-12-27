@@ -25,6 +25,8 @@ public class ProjectController {
 
     @GetMapping("/filtrar")
     public ResponseEntity<List<ProjectDTO>> filter(
+            @RequestParam(defaultValue = "0") Integer skip,
+            @RequestParam(defaultValue = "25") Integer limit,
             @RequestParam Long administrativeCenterId,
             @RequestParam(required = false) String projectCode,
             @RequestParam(required = false) String status,
@@ -41,7 +43,7 @@ public class ProjectController {
         payload.setProjectTypeId(projectTypeId);
 
         return projectService
-                .filter(payload)
+                .filter(payload, skip, limit)
                 .map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.noContent().build());
     }

@@ -9,6 +9,6 @@ import java.util.Optional;
 
 public interface IProjectService {
 
-    Optional<List<ProjectDTO>> filter(ProjectFilterPayloadDTO filterDTO);
+    Optional<List<ProjectDTO>> filter(ProjectFilterPayloadDTO filterDTO, Integer skip, Integer limit);
 
 }

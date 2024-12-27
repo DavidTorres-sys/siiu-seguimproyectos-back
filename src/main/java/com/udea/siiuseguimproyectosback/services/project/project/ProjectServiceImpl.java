@@ -10,8 +10,11 @@ import com.udea.siiuseguimproyectosback.persistence.announcement.IAnnouncementRe
 import com.udea.siiuseguimproyectosback.persistence.project.IProjectRepository;
 import com.udea.siiuseguimproyectosback.persistence.project.ISelectionProcessRepository;
 import com.udea.siiuseguimproyectosback.services.project.project.filter.IProjectFilterService;
+import com.udea.siiuseguimproyectosback.utils.ValidateParams;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
@@ -43,10 +46,12 @@ public class ProjectServiceImpl implements IProjectService{
     }
 
     @Override
-    public Optional<List<ProjectDTO>> filter(ProjectFilterPayloadDTO filterDTO) {
+    public Optional<List<ProjectDTO>> filter(ProjectFilterPayloadDTO filterDTO, Integer skip, Integer limit) {
+        ValidateParams.validatePaginationParams(skip, limit);
         try {
+            Pageable pageable = PageRequest.of(skip / limit, limit);
             List<Project> projects = projectRepository
-                    .findByAdministrativeCenter(filterDTO.getAdministrativeCenterId())
+                    .findByAdministrativeCenter(filterDTO.getAdministrativeCenterId(), pageable)
                     .orElse(Collections.emptyList());
 
             Predicate<Project> projectPredicate = projectFilterService.createProjectPredicate(filterDTO);
@@ -54,6 +59,8 @@ public class ProjectServiceImpl implements IProjectService{
             List<ProjectDTO> projectDTOs = projects
                     .stream()
                     .filter(projectPredicate)
+                    .skip(skip)
+                    .limit(limit)
                     .map(projectMapper::toDTO)
                     .collect(Collectors.toList());
 

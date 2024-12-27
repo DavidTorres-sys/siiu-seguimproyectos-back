@@ -1,6 +1,5 @@
 package com.udea.siiuseguimproyectosback.domain.entity.project;
 
-import com.udea.siiuseguimproyectosback.domain.entity.administrative.AdministrativeCenter;
 import com.udea.siiuseguimproyectosback.domain.entity.announcement.Announcement;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -20,21 +19,14 @@ public class Project {
     @Column(name = "CODIGO", nullable = false, length = 20)
     private String code;
 
-//    @Column(name = "CONVOCATORIA")
-//    private Long announcement;
-
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "CONVOCATORIA", referencedColumnName = "IDENTIFICADOR")
     private Announcement announcement;
 
     @Column(name = "MODALIDAD_CONVOCATORIA")
     private Long announcementMode;
 
-//    @NotNull
-////    @Column(name = "PROCESO_SELECCION", nullable = false)
-////    private Long selectionProcess;
-
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "PROCESO_SELECCION", referencedColumnName = "IDENTIFICADOR")
     private SelectionProcess selectionProcess;
 
@@ -134,8 +126,12 @@ public class Project {
     @Column(name = "NIVEL_PROYECTO")
     private Integer projectLevel;
 
-    @Column(name = "SUBNIVEL_PROYECTO")
-    private Integer projectSublevel;
+//    @Column(name = "SUBNIVEL_PROYECTO")
+//    private Integer projectSublevel;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "SUBNIVEL_PROYECTO", referencedColumnName = "SUBNIVEL_PROYECTO")
+    private SubLevelProject subLevelProject;
 
     @Column(name = "TIPO_PROYECTO_MACRO")
     private Integer projectTypeMacro;
