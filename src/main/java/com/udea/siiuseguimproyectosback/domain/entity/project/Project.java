@@ -30,8 +30,9 @@ public class Project {
     @JoinColumn(name = "PROCESO_SELECCION", referencedColumnName = "IDENTIFICADOR")
     private SelectionProcess selectionProcess;
 
-    @Column(name = "SUBTIPO_PROYECTO")
-    private Integer projectSubtype;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "SUBTIPO_PROYECTO", referencedColumnName = "IDENTIFICADOR")
+    private ProjectSubType projectSubtype;
 
     @Column(name = "ETAPA_ACTUAL")
     private Integer currentStage;
@@ -126,12 +127,9 @@ public class Project {
     @Column(name = "NIVEL_PROYECTO")
     private Integer projectLevel;
 
-//    @Column(name = "SUBNIVEL_PROYECTO")
-//    private Integer projectSublevel;
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "SUBNIVEL_PROYECTO", referencedColumnName = "SUBNIVEL_PROYECTO")
-    private SubLevelProject subLevelProject;
+    private ProjectSubLevel projectSubLevel;
 
     @Column(name = "TIPO_PROYECTO_MACRO")
     private Integer projectTypeMacro;
@@ -145,4 +143,7 @@ public class Project {
     @Size(max = 1)
     @Column(name = "PENDIENTE_REVISION_CENTRO", length = 1)
     private String pendingCenterReview;
+
+    @Column(name = "IDENTIFICADOR")
+    private Long id;
 }

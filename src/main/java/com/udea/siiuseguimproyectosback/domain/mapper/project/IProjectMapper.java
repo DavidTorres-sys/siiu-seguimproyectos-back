@@ -2,9 +2,7 @@ package com.udea.siiuseguimproyectosback.domain.mapper.project;
 
 import com.udea.siiuseguimproyectosback.domain.dto.project.ProjectDTO;
 import com.udea.siiuseguimproyectosback.domain.entity.announcement.Announcement;
-import com.udea.siiuseguimproyectosback.domain.entity.project.Project;
-import com.udea.siiuseguimproyectosback.domain.entity.project.SelectionProcess;
-import com.udea.siiuseguimproyectosback.domain.entity.project.SubLevelProject;
+import com.udea.siiuseguimproyectosback.domain.entity.project.*;
 import com.udea.siiuseguimproyectosback.domain.mapper.IEntityMapper;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -15,18 +13,22 @@ public interface IProjectMapper extends IEntityMapper<ProjectDTO, Project> {
     @Mappings({
             @Mapping(target = "selectionProcess", source = "selectionProcess.name"),
             @Mapping(target = "announcement", source = "announcement.shortName"),
-            @Mapping(target = "subLevelProject", source = "subLevelProject.name")
+            @Mapping(target = "projectSubLevel", source = "projectSubLevel.name"),
+            @Mapping(target = "projectSubtype", source = "projectSubtype.projectType.name"),
     })
     ProjectDTO toDTO(Project project);
 
     @Mappings({
             @Mapping(target = "selectionProcess", source = "selectionProcess"),
             @Mapping(target = "announcement", source = "announcement"),
-            @Mapping(target = "subLevelProject", source = "subLevelProject")
+            @Mapping(target = "projectSubLevel", source = "projectSubLevel"),
+            @Mapping(target = "projectSubtype", source = "projectSubtype"),
     })
     Project toEntity(ProjectDTO projectDTO);
 
     SelectionProcess mapSelectionProcess(String selectionProcessName);
     Announcement mapAnnouncement(String announcementShortName);
-    SubLevelProject mapSubLevelProject(String subLevelProjectName);
+    ProjectSubLevel mapSubLevelProject(String subLevelProjectName);
+    ProjectSubType mapProjectSubtype(String projectSubtypeName);
+    ProjectType mapProjectType(String projectTypeName);
 }

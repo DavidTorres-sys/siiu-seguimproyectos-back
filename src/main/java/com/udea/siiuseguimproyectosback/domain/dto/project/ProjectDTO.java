@@ -7,9 +7,9 @@ public class ProjectDTO {
     private String code;
     private String shortName;
     private String status;
-    private String subLevelProject;
+    private String projectSubLevel;
     private String announcement;
     private String selectionProcess;
     private String responsible;
-    private String projectType;
+    private String projectSubtype;
 }

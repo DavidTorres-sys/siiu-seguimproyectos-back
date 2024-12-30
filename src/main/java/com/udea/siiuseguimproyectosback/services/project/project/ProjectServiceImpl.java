@@ -34,23 +34,19 @@ public class ProjectServiceImpl implements IProjectService {
         ValidateParams.validatePaginationParams(skip, limit);
         try {
 
-            Pageable pageable = PageRequest.of(skip / limit, limit);
-
-            List<Project> projects = projectRepository.findByFilters(
-                    filterDTO.getAdministrativeCenterId(),
-                    filterDTO.getProjectCode(),
-                    filterDTO.getStatus(),
-                    filterDTO.getAnnouncementId(),
-                    filterDTO.getSelectionProcessId(),
-                    pageable
-            );
-
-            List<ProjectDTO> projectDTOs = projects
+            List<ProjectDTO> projects = projectRepository
+                    .findByFilters(
+                        filterDTO.getAdministrativeCenterId(),
+                        filterDTO.getProjectCode(),
+                        filterDTO.getStatus(),
+                        filterDTO.getAnnouncementId(),
+                        filterDTO.getSelectionProcessId(),
+                        PageRequest.of(skip / limit, limit))
                     .stream()
                     .map(projectMapper::toDTO)
                     .collect(Collectors.toList());
 
-            return Optional.ofNullable(projectDTOs.isEmpty() ? null : projectDTOs);
+            return Optional.ofNullable(projects.isEmpty() ? null : projects);
         } catch (DataAccessException e) {
             throw new RuntimeException("Database error while filtering projects.", e);
         } catch (Exception e) {

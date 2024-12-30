@@ -11,7 +11,7 @@ import javax.validation.constraints.Size;
 @NoArgsConstructor
 @Entity
 @Table(name = "SIIU_SUBNIVEL_PROYECTO")
-public class SubLevelProject {
+public class ProjectSubLevel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
