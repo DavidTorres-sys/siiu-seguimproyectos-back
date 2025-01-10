@@ -15,4 +15,6 @@ public interface IProjectService {
             Integer skip,
             Integer limit);
 
+    Optional<List<String>> getAllDistinctStatus(String responsible);
+
 }

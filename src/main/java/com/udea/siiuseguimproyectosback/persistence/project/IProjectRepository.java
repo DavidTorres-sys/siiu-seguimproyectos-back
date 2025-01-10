@@ -1,6 +1,5 @@
 package com.udea.siiuseguimproyectosback.persistence.project;
 
-import com.udea.siiuseguimproyectosback.domain.dto.user.UserSessionDTO;
 import com.udea.siiuseguimproyectosback.domain.entity.project.Project;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -9,6 +8,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
+import java.util.Optional;
+
 
 /**
  * Repository interface for managing {@link Project} entities.
@@ -35,7 +36,6 @@ import java.util.List;
  */
 public interface IProjectRepository extends JpaRepository<Project, String> {
 
-    String SESSION_USER = "usuarioSesion";
 
     /**
      * Finds projects based on required and optional filter criteria. The query dynamically applies
@@ -88,4 +88,7 @@ public interface IProjectRepository extends JpaRepository<Project, String> {
             @Param("projectTypeId") Long projectTypeId,
             Pageable pageable);
 
+    @Query("SELECT DISTINCT p.status FROM Project p " +
+            "WHERE p.responsible.id = :responsible")
+    List<String> findAllDistinctStatus(@Param("responsible") String responsible);
 }

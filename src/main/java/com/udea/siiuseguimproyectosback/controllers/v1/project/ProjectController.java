@@ -60,4 +60,17 @@ public class ProjectController {
                 .map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.noContent().build());
     }
+
+    @GetMapping("/estados-por-usuario")
+    public ResponseEntity<List<String>> getAllDistinctStatus() {
+        //UserSessionDTO user = session.getCurrentUser(request);
+        // Hardcoded user for testing
+        UserSessionDTO user = new UserSessionDTO();
+        user.setDocumentNumber("70553732");
+
+        return projectService
+                .getAllDistinctStatus(user.getDocumentNumber())
+                .map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.noContent().build());
+    }
 }

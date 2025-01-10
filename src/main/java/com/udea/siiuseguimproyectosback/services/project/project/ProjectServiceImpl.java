@@ -39,13 +39,13 @@ public class ProjectServiceImpl implements IProjectService {
         try {
             List<ProjectDTO> projects = projectRepository
                     .findByFilters(user.getDocumentNumber(),
-                        filterDTO.getAdministrativeCenterId(),
-                        filterDTO.getProjectCode(),
-                        filterDTO.getStatus(),
-                        filterDTO.getAnnouncementId(),
-                        filterDTO.getSelectionProcessId(),
-                        filterDTO.getProjectTypeId(),
-                        PageRequest.of(skip / limit, limit))
+                            filterDTO.getAdministrativeCenterId(),
+                            filterDTO.getProjectCode(),
+                            filterDTO.getStatus(),
+                            filterDTO.getAnnouncementId(),
+                            filterDTO.getSelectionProcessId(),
+                            filterDTO.getProjectTypeId(),
+                            PageRequest.of(skip / limit, limit))
                     .stream()
                     .map(projectMapper::toDTO)
                     .collect(Collectors.toList());
@@ -55,6 +55,19 @@ public class ProjectServiceImpl implements IProjectService {
             throw new RuntimeException("Database error while filtering projects.", e);
         } catch (Exception e) {
             throw new RuntimeException("Unknown error occurred while filtering projects.", e);
+        }
+    }
+
+    @Override
+    public Optional<List<String>> getAllDistinctStatus(String responsible) {
+        try {
+            List<String> statuses = projectRepository.findAllDistinctStatus(responsible);
+
+            return Optional.ofNullable(statuses.isEmpty() ? null : statuses);
+        } catch (DataAccessException e) {
+            throw new RuntimeException("Database error while getting distinct statuses.", e);
+        } catch (Exception e) {
+            throw new RuntimeException("Unknown error occurred while getting distinct statuses.", e);
         }
     }
 }
