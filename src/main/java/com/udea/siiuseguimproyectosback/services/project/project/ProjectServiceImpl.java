@@ -2,14 +2,13 @@ package com.udea.siiuseguimproyectosback.services.project.project;
 
 import com.udea.siiuseguimproyectosback.domain.dto.project.ProjectDTO;
 import com.udea.siiuseguimproyectosback.domain.dto.project.ProjectFilterPayloadDTO;
-import com.udea.siiuseguimproyectosback.domain.entity.project.Project;
+import com.udea.siiuseguimproyectosback.domain.dto.user.UserSessionDTO;
 import com.udea.siiuseguimproyectosback.domain.mapper.project.IProjectMapper;
 import com.udea.siiuseguimproyectosback.persistence.project.IProjectRepository;
 import com.udea.siiuseguimproyectosback.utils.ValidateParams;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -30,17 +29,22 @@ public class ProjectServiceImpl implements IProjectService {
     }
 
     @Override
-    public Optional<List<ProjectDTO>> filter(ProjectFilterPayloadDTO filterDTO, Integer skip, Integer limit) {
+    public Optional<List<ProjectDTO>> filter(
+            UserSessionDTO user,
+            ProjectFilterPayloadDTO filterDTO,
+            Integer skip,
+            Integer limit) {
+
         ValidateParams.validatePaginationParams(skip, limit);
         try {
-
             List<ProjectDTO> projects = projectRepository
-                    .findByFilters(
+                    .findByFilters(user.getDocumentNumber(),
                         filterDTO.getAdministrativeCenterId(),
                         filterDTO.getProjectCode(),
                         filterDTO.getStatus(),
                         filterDTO.getAnnouncementId(),
                         filterDTO.getSelectionProcessId(),
+                        filterDTO.getProjectTypeId(),
                         PageRequest.of(skip / limit, limit))
                     .stream()
                     .map(projectMapper::toDTO)

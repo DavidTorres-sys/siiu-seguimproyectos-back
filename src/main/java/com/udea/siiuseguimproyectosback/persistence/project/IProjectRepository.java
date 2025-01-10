@@ -1,6 +1,8 @@
 package com.udea.siiuseguimproyectosback.persistence.project;
 
+import com.udea.siiuseguimproyectosback.domain.dto.user.UserSessionDTO;
 import com.udea.siiuseguimproyectosback.domain.entity.project.Project;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -32,6 +34,8 @@ import java.util.List;
  * @see JpaRepository
  */
 public interface IProjectRepository extends JpaRepository<Project, String> {
+
+    String SESSION_USER = "usuarioSesion";
 
     /**
      * Finds projects based on required and optional filter criteria. The query dynamically applies
@@ -71,12 +75,17 @@ public interface IProjectRepository extends JpaRepository<Project, String> {
             "AND (:projectCode IS NULL OR p.code = :projectCode) " +
             "AND (:status IS NULL OR p.status = :status) " +
             "AND (:announcementId IS NULL OR p.announcement.id = :announcementId) " +
-            "AND (:selectionProcessId IS NULL OR p.selectionProcess.id = :selectionProcessId)")
-    List<Project> findByFilters(
+            "AND (:selectionProcessId IS NULL OR p.selectionProcess.id = :selectionProcessId) " +
+            "AND (:projectTypeId IS NULL OR p.projectSubtype.projectType.id = :projectTypeId)" +
+            "AND p.responsible.id = :responsible")
+    Page<Project> findByFilters(
+            @Param("responsible") String responsible,
             @Param("administrativeCenterId") Long administrativeCenterId,
             @Param("projectCode") String projectCode,
             @Param("status") String status,
             @Param("announcementId") Long announcementId,
             @Param("selectionProcessId") Long selectionProcessId,
+            @Param("projectTypeId") Long projectTypeId,
             Pageable pageable);
+
 }

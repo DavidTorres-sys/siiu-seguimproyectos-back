@@ -1,4 +1,4 @@
-package com.udea.siiuseguimproyectosback.core.security.user;
+package com.udea.siiuseguimproyectosback.domain.dto.user;
 
 import lombok.Data;
 import java.util.List;
@@ -17,7 +17,7 @@ import java.util.List;
  * }</pre>
  */
 @Data
-public class UserSession {
+public class UserSessionDTO {
 
     /**
      * The unique username of the authenticated user.
@@ -28,29 +28,21 @@ public class UserSession {
 
     /**
      * The full name of the user, including first name and both surnames.
-     * <p>
-     * Example: "John Michael Doe".
      */
     private String fullName;
 
     /**
      * The first name of the user.
-     * <p>
-     * Example: "John".
      */
     private String firstName;
 
     /**
      * The primary surname of the user.
-     * <p>
-     * Example: "Doe".
      */
     private String lastName;
 
     /**
      * The secondary surname of the user, if applicable.
-     * <p>
-     * Example: "Smith". May be null if the user does not have a second surname.
      */
     private String secondLastName;
 
@@ -87,28 +79,28 @@ public class UserSession {
      * <p>
      * This is typically determined during the login or session validation process.
      */
-    private boolean isRoleAuthorized;
+    private Boolean isRoleAuthorized;
 
     /**
      * Indicates whether the user has the role of "Document Coordinator."
      * <p>
      * This role usually involves managing and overseeing document-related processes.
      */
-    private boolean isDocumentCoordinator;
+    private Boolean isDocumentCoordinator;
 
     /**
      * Indicates whether the user has the role of "Reviewer."
      * <p>
      * Reviewers are typically responsible for evaluating or approving specific processes.
      */
-    private boolean isReviewer;
+    private Boolean isReviewer;
 
     /**
      * Indicates whether the user has the role of "Social Worker."
      * <p>
      * Social workers may have specialized access and responsibilities in the system.
      */
-    private boolean isSocialWorker;
+    private Boolean isSocialWorker;
 
     /**
      * The base URL of the application that the user is accessing.
@@ -116,4 +108,5 @@ public class UserSession {
      * This can be used for context-specific operations, such as constructing links or redirecting.
      */
     private String applicationUrl;
+
 }

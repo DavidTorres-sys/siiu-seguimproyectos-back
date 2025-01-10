@@ -1,6 +1,7 @@
 package com.udea.siiuseguimproyectosback.domain.entity.project;
 
 import com.udea.siiuseguimproyectosback.domain.entity.announcement.Announcement;
+import com.udea.siiuseguimproyectosback.domain.entity.user.Person;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -46,10 +47,9 @@ public class Project {
     @Column(name = "FECHA_ENVIO_CENTRO")
     private LocalDate sendCenterDate;
 
-    @NotNull
-    @Size(max = 16)
-    @Column(name = "RESPONSABLE", nullable = false, length = 16)
-    private String responsible;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "RESPONSABLE", referencedColumnName = "IDENTIFICADOR")
+    private Person responsible;
 
     @NotNull
     @Size(max = 1)
