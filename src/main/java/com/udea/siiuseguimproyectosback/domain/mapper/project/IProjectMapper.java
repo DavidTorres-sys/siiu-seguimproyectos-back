@@ -54,7 +54,7 @@ public interface IProjectMapper extends IEntityMapper<ProjectDTO, Project> {
     @Mapping(target = "announcement", source = "announcement.shortName")
     @Mapping(target = "projectSubLevel", source = "projectSubLevel.name")
     @Mapping(target = "projectSubtype", source = "projectSubtype.projectType.name")
-    @Mapping(target = "responsible", source = "responsible.id")
+    @Mapping(target = "responsible", expression = "java(project.getResponsible().getFirstName() + \"\" + project.getResponsible().getLastName1())")
     ProjectDTO toDTO(Project project);
 
     /**
@@ -78,6 +78,7 @@ public interface IProjectMapper extends IEntityMapper<ProjectDTO, Project> {
     @Mapping(target = "projectSubtype", source = "projectSubtype")
     @Mapping(target = "responsible", source = "responsible")
     Project toEntity(ProjectDTO projectDTO);
+
 
     /**
      * Maps a {@code selectionProcessName} to a {@link SelectionProcess} entity.
@@ -119,5 +120,5 @@ public interface IProjectMapper extends IEntityMapper<ProjectDTO, Project> {
      */
     ProjectType mapProjectType(String projectTypeName);
 
-    Person mapPerson(String personId);
+    Person mapPerson(String personName);
 }

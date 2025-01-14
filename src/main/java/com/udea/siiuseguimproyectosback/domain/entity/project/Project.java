@@ -48,7 +48,7 @@ public class Project {
     private LocalDate sendCenterDate;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "RESPONSABLE", referencedColumnName = "IDENTIFICADOR")
+    @JoinColumn(name = "RESPONSABLE", referencedColumnName = "IDENTIFICACION")
     private Person responsible;
 
     @NotNull

@@ -15,9 +15,8 @@ import java.util.Date;
 public class Person {
 
     @Id
-    @NotNull
     @Size(max = 20)
-    @Column(name = "IDENTIFICADOR", nullable = false, updatable = false)
+    @Column(name = "IDENTIFICACION", nullable = false)
     private String id;
 
     @Size(max = 30)

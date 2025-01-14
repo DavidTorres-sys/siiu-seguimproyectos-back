@@ -1,5 +1,7 @@
 package com.udea.siiuseguimproyectosback.domain.dto.project;
 
+import com.udea.siiuseguimproyectosback.domain.entity.project.Project;
+
 import lombok.Data;
 
 /**
@@ -13,12 +15,12 @@ import lombok.Data;
  * <ul>
  *   <li><b>code:</b> The unique code of the project.</li>
  *   <li><b>shortName:</b> A short, user-friendly name or identifier for the project.</li>
- *   <li><b>status:</b> The current status of the project (e.g., "active", "completed").</li>
- *   <li><b>projectSubLevel:</b> The sub-level classification of the project (e.g., "Level 1").</li>
+ *   <li><b>status:</b> The current status of the project.</li>
+ *   <li><b>projectSubLevel:</b> The sub-level classification of the project.</li>
  *   <li><b>announcement:</b> The short name of the announcement associated with the project.</li>
  *   <li><b>selectionProcess:</b> The name of the selection process related to the project.</li>
  *   <li><b>responsible:</b> The person or entity responsible for managing the project.</li>
- *   <li><b>projectSubtype:</b> The subtype classification of the project (e.g., "Research", "Development").</li>
+ *   <li><b>projectSubtype:</b> The subtype classification of the project.</li>
  * </ul>
  *
  * <p>
@@ -96,4 +98,6 @@ public class ProjectDTO {
      * </p>
      */
     private String projectSubtype;
+
+    private String ipCoordinator;
 }

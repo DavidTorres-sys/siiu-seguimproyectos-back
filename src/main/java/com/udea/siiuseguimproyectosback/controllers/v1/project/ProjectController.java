@@ -53,7 +53,7 @@ public class ProjectController {
         //UserSessionDTO user = session.getCurrentUser(request);
         // Hardcoded user for testing
         UserSessionDTO user = new UserSessionDTO();
-        user.setDocumentNumber("70553732");
+        user.setDocumentNumber("43004681");
 
         return projectService
                 .filter(user, payload, skip, limit)
@@ -66,7 +66,7 @@ public class ProjectController {
         //UserSessionDTO user = session.getCurrentUser(request);
         // Hardcoded user for testing
         UserSessionDTO user = new UserSessionDTO();
-        user.setDocumentNumber("70553732");
+        user.setDocumentNumber("43004681");
 
         return projectService
                 .getAllDistinctStatus(user.getDocumentNumber())
