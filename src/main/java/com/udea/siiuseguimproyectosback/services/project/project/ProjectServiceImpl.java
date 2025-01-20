@@ -4,7 +4,6 @@ import com.udea.siiuseguimproyectosback.domain.dto.project.ProjectDTO;
 import com.udea.siiuseguimproyectosback.domain.dto.project.ProjectFilterPayloadDTO;
 import com.udea.siiuseguimproyectosback.domain.dto.user.UserSessionDTO;
 import com.udea.siiuseguimproyectosback.domain.mapper.project.IProjectMapper;
-import com.udea.siiuseguimproyectosback.persistence.project.IProjectParticipantRepository;
 import com.udea.siiuseguimproyectosback.persistence.project.IProjectRepository;
 import com.udea.siiuseguimproyectosback.utils.ValidateParams;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,15 +20,12 @@ public class ProjectServiceImpl implements IProjectService {
 
     private final IProjectRepository projectRepository;
     private final IProjectMapper projectMapper;
-    private final IProjectParticipantRepository projectParticipantRepository;
 
     @Autowired
     public ProjectServiceImpl(IProjectRepository projectRepository,
-                              IProjectMapper projectMapper,
-                              IProjectParticipantRepository projectParticipantRepository) {
+                              IProjectMapper projectMapper) {
         this.projectRepository = projectRepository;
         this.projectMapper = projectMapper;
-        this.projectParticipantRepository = projectParticipantRepository;
     }
 
     @Override

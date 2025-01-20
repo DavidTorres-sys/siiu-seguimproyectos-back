@@ -26,6 +26,9 @@ public class ProjectParticipantRol {
     @JoinColumn(name = "TIPO_PROYECTO", referencedColumnName = "IDENTIFICADOR")
     private ProjectType projectType;
 
+    @ManyToOne
+    private ProjectParticipant projectParticipant;
+
     @Column(name = "PARTICIPA_BENEFICIOS")
     private Integer benefitsParticipation;
 

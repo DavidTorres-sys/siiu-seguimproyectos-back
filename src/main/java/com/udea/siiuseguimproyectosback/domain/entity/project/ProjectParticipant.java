@@ -8,6 +8,7 @@ import javax.persistence.*;
 import javax.validation.constraints.Size;
 import java.sql.Timestamp;
 import java.util.Date;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -62,9 +63,9 @@ public class ProjectParticipant {
     @Column(name = "FECHA_FIN")
     private Date endDate;
 
-    // TODO: CREATE TABLE
-    @Column(name = "ROL_PARTICIPANTE_PROYECTO")
-    private Long projectParticipantRole;
+    @OneToMany(fetch = FetchType.LAZY)
+    @JoinColumn(name = "ROL_PARTICIPANTE_PROYECTO", referencedColumnName = "IDENTIFICADOR")
+    private List<ProjectParticipantRol> projectParticipantRole;
 
     @Column(name = "INSTITUCION")
     private Long institution;
